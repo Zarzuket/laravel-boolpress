@@ -15,9 +15,9 @@
         </div>
         <div class="row">
             @foreach ($posts as $post)
-                {{-- {{dd($posts)}}                 --}}
                 <div class="col-12">
-                    <h5 style="color: red">{{$post->title}}</h5> 
+                    <a href="{{route("post.show", $post["slug"])}}"><h5 style="color: red">{{$post->title}}</h5> </a>
+                    
                 </div>
             @endforeach
         </div>
