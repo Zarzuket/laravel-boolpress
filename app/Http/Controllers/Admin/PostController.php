@@ -4,10 +4,16 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 use App\Post;
 
 class PostController extends Controller
 {
+
+    protected $validationRules = [
+        'title' => 'string|required|max:100',
+        'content' => 'string|required'
+    ];
     /**
      * Display a listing of the resource.
      *
@@ -28,8 +34,7 @@ class PostController extends Controller
     {
         //
     }
-
-    /**
+/**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -37,7 +42,17 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        //validations
+        $request->validate($this->validationRules);
+
+        $newPost = new Post();
+        $newPost->fill($request->all());
+       
+        $newPost->slug = $this->getSlug($request->title);
+
+        $newPost->save();
+
+        return redirect()->route("admin.posts.index")->with('success',"Il post è stato creato");
     }
 
     /**
@@ -48,7 +63,7 @@ class PostController extends Controller
      */
     public function show(Post $post)
     {
-        return view("admin.posts.show",compact("post"));
+        return view("admin.posts.show", compact("post"));
     }
 
     /**
@@ -57,9 +72,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Post $post)
     {
-        //
+        return view("admin.posts.edit", compact("post"));
     }
 
     /**
@@ -69,9 +84,20 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        //validations
+        $request->validate($this->validationRules);
+
+        if($post->title != $request->title) {
+            $post->slug = $this->getSlug($request->title);
+        }
+
+        $post->fill($request->all());
+
+        $post->save();
+
+        return redirect()->route("admin.posts.index")->with('success',"Il post {$post->id} è stato aggiornato");
     }
 
     /**
@@ -84,5 +110,21 @@ class PostController extends Controller
     {
         $post->delete();
         return redirect()->route("admin.posts.index")->with("success","il post: {$post->id} '{$post->title}' è stato eliminato");
+    }
+    private function getSlug($title)
+    {
+        $slug = Str::of($title)->slug('-');
+
+        $postExist = Post::where("slug", $slug)->first();
+
+        $count = 2;
+        
+        while($postExist) {
+            $slug = Str::of($title)->slug('-') . "-{$count}";
+            $postExist = Post::where("slug", $slug)->first();
+            $count++;
+        }
+
+        return $slug;
     }
 }

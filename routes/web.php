@@ -17,7 +17,8 @@ use Illuminate\Support\Facades\Route;
 // ROTTE PUBLIC
 
 Route::get('/','PageController@index');
-Route::get ('/blog' , "PostController@index");
+Route::get ('/blog' , "PostController@index")->name("posts.index");
+Route::get('/show/{slug}' , "PostController@show")->name("single.post");
 
 Auth::routes();
 
