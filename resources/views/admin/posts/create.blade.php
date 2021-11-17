@@ -1,5 +1,4 @@
-lines (32 sloc)  1.24 KB
-   
+
 @extends('layouts.app')
 
 @section('content')

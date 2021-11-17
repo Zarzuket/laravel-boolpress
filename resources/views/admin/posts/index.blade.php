@@ -6,6 +6,7 @@
         <div class="col-md-12">
             <div class="card">
                 <div class="card-header">{{ __('Dashboard') }}</div>
+                <div class="card-header"><a href="{{route("admin.posts.create")}}">Crea un nuovo post</a></div>
 
                 <div class="card-body">
                     @if ($message = Session::get("success"))

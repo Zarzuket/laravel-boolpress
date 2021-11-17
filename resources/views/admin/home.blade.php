@@ -13,8 +13,15 @@
                         {{ session('status') }}
                     </div>
                 @endif
+                    <ul>
+                        <li>
+                            <a href="{{route("admin.posts.index")}}">Visualizza i posts</a>
+                        </li>
+                        <li>
+                            <a href="{{route("admin.posts.create")}}">Crea un nuovo post</a>
+                        </li>
+                    </ul>
 
-                <a href="{{route("admin.posts.index")}}">Visualizza i posts</a>
                 </div>
             </div>
         </div>

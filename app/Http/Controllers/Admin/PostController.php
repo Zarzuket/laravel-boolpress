@@ -32,7 +32,8 @@ class PostController extends Controller
      */
     public function create()
     {
-        //
+        $posts = Post::all();
+        return view("admin.posts.create",compact("posts"));
     }
 /**
      * Store a newly created resource in storage.
