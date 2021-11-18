@@ -13,7 +13,8 @@ class PostController extends Controller
 
     protected $validationRules = [
         'title' => 'string|required|max:100',
-        'content' => 'string|required'
+        'content' => 'string|required',
+        'category_id' => 'nullable|exists:categories, id'
     ];
     /**
      * Display a listing of the resource.
@@ -77,7 +78,8 @@ class PostController extends Controller
      */
     public function edit(Post $post)
     {
-        return view("admin.posts.edit", compact("post"));
+        $categories = Category::all();
+        return view("admin.posts.edit", compact("post","categories"));
     }
 
     /**
