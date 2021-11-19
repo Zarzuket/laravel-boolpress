@@ -9,7 +9,17 @@
 
                 <div class="card-body">
                     <h1>{{$post->id}}</h1>
-                    <h3>{{$post->title}}</h3>
+                    @if ($post->category)     
+                        <h3>{{$post->category->name}}</h3>
+                    @endif 
+                    <h4>
+                        @if (count($post->tags) > 0)
+                            Tags:
+                            @foreach ($post->tags as $tag)
+                            <span class="badge bg-success">{{$tag->name}}</span>
+                            @endforeach
+                        @endif
+                    </h4>              
                     <p>{{$post->content}}</p>
                 </div>
             </div>
