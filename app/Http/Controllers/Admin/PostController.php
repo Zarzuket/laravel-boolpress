@@ -39,7 +39,7 @@ class PostController extends Controller
         // $posts = Post::all();
         $categories = Category::all();
         $tags = Tag::all();
-        return view("admin.posts.create",compact("categories","tags"));
+        return view("admin.posts.create",compact("categories","tags",));
     }
 /**
      * Store a newly created resource in storage.
@@ -58,7 +58,7 @@ class PostController extends Controller
         $newPost->slug = $this->getSlug($request->title);
 
         $newPost->save();
-        $newPost->tags()->attach($request->tags);
+        $newPost->tags()->attach($request["tags"]);
 
         return redirect()->route("admin.posts.index")->with('success',"Il post è stato creato");
     }

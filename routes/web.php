@@ -19,7 +19,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/','PageController@index');
 Route::get ('/blog' , "PostController@index")->name("posts.index");
 Route::get('/show/{slug}' , "PostController@show")->name("single.post");
-Route::get('/api-posts', 'PageController@apiPosts')->name("posts.api");
+// Route::get('/api-posts', 'PageController@apiPosts')->name("posts.api");
 
 Auth::routes();
 

@@ -11,6 +11,14 @@
 		<p>
 			{{$post['content']}}
 		</p>
+		<h4>
+			@if (count($post->tags) > 0)
+				Tags:
+				@foreach ($post->tags as $tag)
+					<span class="badge bg-success">{{$tag->name}}</span>
+				@endforeach
+			@endif
+		</h4>  
 		</div><!-- /.blog-post -->
 		@endforeach
 
